@@ -1,0 +1,15 @@
+{
+  "name": "xyz.monitor.basic.bootstrap",
+  "version": "1.0.0",
+  "description": "basic monitoring server for xyz node",
+  "main": "xyz.monitor.basic.bootstrap.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node-xyz",
+    "node"
+  ],
+  "author": "Kian.peymani@gmail.com",
+  "license": "ISC"
+}
