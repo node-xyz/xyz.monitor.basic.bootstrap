@@ -6,13 +6,13 @@ setInterval(() => {
   // this is because when this module is being initialized, the monitor module itself is empty!
   // TODO think of a better way for communication between middlewares and bootstrap functions
   if (monitor === undefined) monitor = require('./../xyz.monitor.basic.bootstrap')
-  monitor.setRcvLoad(count / (interval / 1000))
+  monitor.setSendLoad(count / (interval / 1000))
   count = 0
 }, interval)
 
-function callReceiveMonitor (param, next, end) {
+function callSendMonitor (param, next, end) {
   count += 1
   next()
 }
 
-module.exports = callReceiveMonitor
+module.exports = callSendMonitor
