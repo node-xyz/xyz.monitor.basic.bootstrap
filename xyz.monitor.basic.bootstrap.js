@@ -2,12 +2,13 @@ let express = require('express')
 let monitorCallReceive = require('./middleware/xyz.monitor.call.receive.middleware')
 let monitorCallSend = require('./middleware/xyz.monitor.call.send.middleware')
 let load = { snd: 0, rcv: 0}
-const logger = require('xyz-core').logger
+let logger
 
 function basicMonitorBootstrap (xyz, port = 5000) {
   /*
   Initialize a simple express server
    */
+  logger = xyz.logger
   var app = express()
   app.get('/', function (req, res) {
     res.json(load)
@@ -21,7 +22,7 @@ function basicMonitorBootstrap (xyz, port = 5000) {
    */
   xyz.serviceRepository.transportServer.callReceiveMiddlewareStack.register(0,
     monitorCallReceive)
-  xyz.serviceRepository.transportClient.callDispatchMidllewareStack.register(0,
+  xyz.serviceRepository.transportClient.callDispatchMiddlewareStack.register(0,
     monitorCallSend)
 }
 
