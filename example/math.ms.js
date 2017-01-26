@@ -1,4 +1,4 @@
-let XYZ = require('xyz-core').xyz
+let XYZ = require('xyz-core')
 let xyzMonitor = require('./../xyz.monitor.basic.bootstrap')
 let fn = require('./../../xyz-core/test/ms/mock.functions')
 
@@ -24,7 +24,7 @@ mathMs.register('/math/float/neg', function (payload, XResponse) {
 })
 
 setInterval(() => {
-  mathMs.call('/string/up', 'hello', (err, body, response) => {
+  mathMs.call({servicePath: '/string/up', payload: 'hello'}, (err, body, response) => {
     console.log(err, body)
   })
 }, 2000)

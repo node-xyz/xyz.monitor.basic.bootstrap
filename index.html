@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>XYZ monitor app</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.3/Chart.bundle.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/ansi_up.js"></script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <h1>XYZ Monitoring</h1>
+      </div>
+      <div class="row">
+        <div class="col col-md-6">
+          <pre id="inspect">
+
+          </pre>
+        </div>
+        <div class="col col-md-6">
+          <h4>Network usage</h4>
+          <canvas id="network" width="400" height="400"></canvas>
+
+          <hr>
+
+          <h4>CPU usage</h4>
+          <canvas id="hw" width="400" height="400"></canvas>
+
+
+          <h4>Memory usage</h4>
+          <canvas id="mem" width="400" height="400"></canvas>
+
+
+        </div>
+      </div>
+
+    </div>
+
+
+    <script type="text/javascript">
+    var _labels = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    var _data_snd = [0]
+    var _data_rcv = [0]
+
+    var _data_cpu_system = [0]
+    var _data_cpu_user = [0]
+    var _data_mem_total = [0]
+    var _data_mem_used = [0]
+
+    colors = ["#2C3E50", "#C0392B", "#446CB3", "#F2784B"]
+
+    var network = new Chart($("#network"), {
+        type: 'line',
+        data: {
+          labels: _labels,
+          datasets: [
+            {
+              label: "Send",
+              backgroundColor: "transparent",
+              borderColor: colors[0],
+              pointBackgroundColor: colors[0],
+              pointBorderColor: "#fff",
+              pointHoverBackgroundColor: "#fff",
+              pointHoverBorderColor: colors[0],
+              data: _data_snd
+            },
+            {
+              label: "Receive",
+              backgroundColor: "transparent",
+              borderColor: colors[1],
+              pointBackgroundColor: colors[1],
+              pointBorderColor: "#fff",
+              pointHoverBackgroundColor: "#fff",
+              pointHoverBorderColor: colors[1],
+              data: _data_rcv
+            }
+          ]
+    },
+    });
+
+    var hw = new Chart($("#hw"), {
+        type: 'line',
+        data: {
+          labels: _labels,
+          datasets: [
+            {
+              label: "CPU[user]",
+              backgroundColor: "transparent",
+              borderColor: colors[0],
+              pointBackgroundColor: colors[0],
+              pointBorderColor: "#fff",
+              pointHoverBackgroundColor: "#fff",
+              pointHoverBorderColor: colors[0],
+              data: _data_cpu_user
+            },
+            {
+              label: "CPU[system]",
+              backgroundColor: "transparent",
+              borderColor: colors[1],
+              pointBackgroundColor: colors[1],
+              pointBorderColor: "#fff",
+              pointHoverBackgroundColor: "#fff",
+              pointHoverBorderColor: colors[1],
+              data: _data_cpu_system
+            },
+          ]
+    },
+    });
+
+    var mem = new Chart($("#mem"), {
+        type: 'line',
+        data: {
+          labels: _labels,
+          datasets: [
+            {
+              label: "Memory[heap used]",
+              backgroundColor: "transparent",
+              borderColor: colors[2],
+              pointBackgroundColor: colors[2],
+              pointBorderColor: "#fff",
+              pointHoverBackgroundColor: "#fff",
+              pointHoverBorderColor: colors[2],
+              data: _data_mem_used
+            },
+            {
+              label: "Memory[heap total]",
+              backgroundColor: "transparent",
+              borderColor: colors[3],
+              pointBackgroundColor: colors[3],
+              pointBorderColor: "#fff",
+              pointHoverBackgroundColor: "#fff",
+              pointHoverBorderColor: colors[3],
+              data: _data_mem_total
+            }
+          ]
+    },
+    });
+
+
+    setInterval(function() {
+      $.get('/all', function(data) {
+        console.log(data);
+        $("#inspect").html(ansi_up.ansi_to_html(data.inspect))
+        _data_snd.push(data.load.snd)
+        if (_data_snd.length >= 11) {
+          _data_snd.shift()
+        }
+
+        _data_rcv.push(data.load.rcv)
+        if (_data_rcv.length >= 11) {
+          _data_rcv.shift()
+        }
+
+        _data_cpu_user.push(data.inspectJSON.global.machineReport.cpu.user)
+        if (_data_cpu_user.length >= 11) {
+          _data_cpu_user.shift()
+        }
+
+        _data_cpu_system.push(data.inspectJSON.global.machineReport.cpu.system)
+        if (_data_cpu_system.length >= 11) {
+          _data_cpu_system.shift()
+        }
+
+        _data_mem_total.push(data.inspectJSON.global.machineReport.mem.heapTotal)
+        if (_data_mem_total.length >= 11) {
+          _data_mem_total.shift()
+        }
+
+        _data_mem_used.push(data.inspectJSON.global.machineReport.mem.heapUsed)
+        if (_data_mem_used.length >= 11) {
+          _data_mem_used.shift()
+        }
+
+
+
+        network.update()
+        hw.update()
+        mem.update()
+        console.log(data)
+      })
+    }, 1000)
+
+
+    </script>
+  </body>
+</html>

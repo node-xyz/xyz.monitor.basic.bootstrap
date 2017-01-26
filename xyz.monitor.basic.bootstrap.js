@@ -10,8 +10,14 @@ function basicMonitorBootstrap (xyz, port = 5000) {
    */
   logger = xyz.logger
   var app = express()
+  app.use(express.static(__dirname + '/lib'))
+
   app.get('/', function (req, res) {
-    res.json(load)
+    res.sendFile(__dirname + '/index.html')
+  })
+
+  app.get('/all', function (req, res) {
+    res.json({load: load, inspectJSON: xyz.inspectJSON(), inspect: xyz.inspect()})
   })
   app.listen(port, function () {
     logger.info(`monitor server started at port ${port}`)
