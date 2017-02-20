@@ -19,16 +19,16 @@ function basicMonitorBootstrap (xyz, port = 5000) {
   app.get('/all', function (req, res) {
     res.json({load: load, inspectJSON: xyz.inspectJSON(), inspect: xyz.inspect()})
   })
-  app.listen(port, function () {
-    logger.info(`monitor server started at port ${port}`)
+  let listener = app.listen(port, function () {
+    logger.info(`monitor server started at port ${listener.address().port}`)
   })
 
   /*
   Register required middlewares
    */
-  xyz.serviceRepository.transportServer.callReceiveMiddlewareStack.register(0,
+  xyz.middlewares().transport.server('CALL')(xyz.CONFIG.getSelfConf().transport[0].port).register(0,
     monitorCallReceive)
-  xyz.serviceRepository.transportClient.callDispatchMiddlewareStack.register(0,
+  xyz.middlewares().transport.client('CALL').register(0,
     monitorCallSend)
 }
 

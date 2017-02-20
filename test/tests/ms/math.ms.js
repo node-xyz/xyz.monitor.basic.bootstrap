@@ -1,19 +1,16 @@
 let XYZ = require('xyz-core')
-let xyzMonitor = require('./../xyz.monitor.basic.bootstrap')
-let fn = require('./../../xyz-core/test/ms/mock.functions')
+let xyzMonitor = require('./../../../xyz.monitor.basic.bootstrap').bootstrap
+let fn = require('./../../../../xyz-core/test/ms/mock.functions')
 
 var mathMs = new XYZ({
   selfConf: {
-    defaultSendStrategy: 'xyz.service.send.to.all',
-    allowJoin: true,
     name: 'MathMs',
-    host: '127.0.0.1',
-    port: 3333
+    host: '127.0.0.1'
   },
   systemConf: { nodes: []}
 })
 
-xyzMonitor.bootstrap(mathMs, 7000)
+mathMs.bootstrap(xyzMonitor, 7000)
 
 mathMs.register('/math/decimal/mul', fn.mul)
 mathMs.register('/math/decimal/neg', fn.neg)
