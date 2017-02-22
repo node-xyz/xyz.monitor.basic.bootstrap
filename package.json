@@ -4,13 +4,16 @@
   "description": "basic monitoring server for xyz node",
   "main": "xyz.monitor.basic.bootstrap.js",
   "scripts": {
-    "test": ""
+    "test": "./node_modules/.bin/mocha --reporter spec"
   },
   "dependencies": {
-    "chai": "^3.5.0",
     "chalk": "latest",
     "xyz-cli": "latest"
   },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3"
+  }, 
   "keywords": [
     "node-xyz",
     "node"
