@@ -1,6 +1,6 @@
 let XYZ = require('xyz-core')
 let xyzMonitor = require('./../../../xyz.monitor.basic.bootstrap').bootstrap
-let fn = require('./../../../../xyz-core/test/ms/mock.functions')
+let fn = require('./../../mock.functions')
 
 var mathMs = new XYZ({
   selfConf: {
