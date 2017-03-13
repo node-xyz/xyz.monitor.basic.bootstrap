@@ -2,8 +2,10 @@
 
 [![Build Status](https://travis-ci.org/node-xyz/xyz.monitor.basic.bootstrap.svg?branch=master)](https://travis-ci.org/node-xyz/xyz.monitor.basic.bootstrap)
 
+[![npm version](https://badge.fury.io/js/xyz.monitor.basic.bootstrap.svg)](https://badge.fury.io/js/xyz.monitor.basic.bootstrap)
+
 ---
-This project has been created as a means for demonstrating the usage of bootstrap functions. [This section of the documentations](node-xyz.github.io/documentations/advance/bootstrap-functions/) will describe how this bootstrap function work in depth.
+This project has been created as a means for demonstrating the usage of bootstrap functions. [This section of the documentations](https://node-xyz.github.io/documentations/advance/bootstrap-functions/) will describe how this bootstrap function work in depth.
 
 ## Usage
 
@@ -27,7 +29,7 @@ Note that this bootstrap function will monitor the default `CALL` route by defau
 
 ### Example output
 
-![](node-xyz.github.io/assets/img/monitor.example.png)
+![](https://node-xyz.github.io/assets/img/monitor.example.png)
 
 
 #### Tests
