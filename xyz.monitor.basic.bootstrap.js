@@ -4,7 +4,7 @@ let monitorCallSend = require('./middleware/xyz.monitor.call.send.middleware')
 let load = { snd: 0, rcv: 0}
 let logger
 
-function basicMonitorBootstrap (xyz, port = 5000) {
+function _basicMonitor (xyz, port = 5000) {
   /*
   Initialize a simple express server
    */
@@ -26,14 +26,17 @@ function basicMonitorBootstrap (xyz, port = 5000) {
   /*
   Register required middlewares
    */
-  xyz.middlewares().transport.server('CALL')(xyz.CONFIG.getSelfConf().transport[0].port).register(0,
+  xyz.middlewares().transport.server('CALL')(xyz.id().port).register(0,
     monitorCallReceive)
   xyz.middlewares().transport.client('CALL').register(0,
     monitorCallSend)
 }
 
 module.exports = {
-  bootstrap: basicMonitorBootstrap,
+  // will be used by the user of this bootstrap function
+  bootstrap: _basicMonitor,
+
+  // will be used by the two middlewares inserted
   setSendLoad: (aLoad) => {
     load.snd = aLoad
   },

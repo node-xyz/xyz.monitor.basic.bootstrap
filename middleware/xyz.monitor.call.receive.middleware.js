@@ -10,9 +10,9 @@ setInterval(() => {
   count = 0
 }, interval)
 
-function callReceiveMonitor (param, next, end) {
+function _receiveCounter (param, next, end) {
   count += 1
   next()
 }
 
-module.exports = callReceiveMonitor
+module.exports = _receiveCounter

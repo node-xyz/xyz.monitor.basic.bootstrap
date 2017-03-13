@@ -10,9 +10,9 @@ setInterval(() => {
   count = 0
 }, interval)
 
-function callSendMonitor (param, next, end) {
+function _sndCounter (param, next, end) {
   count += 1
   next()
 }
 
-module.exports = callSendMonitor
+module.exports = _sndCounter
